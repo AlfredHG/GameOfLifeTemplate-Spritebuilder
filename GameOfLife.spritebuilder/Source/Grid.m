@@ -53,7 +53,7 @@ static const int GRID_COLUMNS = 10;
             _gridArray[i][j] = creature;
             
             //test visibilita`
-            creature.isAlive = YES;
+            //creature.isAlive = YES;
             
             x+=_cellWidth;
         }
@@ -62,4 +62,32 @@ static const int GRID_COLUMNS = 10;
     }
 }
 
+- (void)touchBegan:(CCTouch *)touch withEvent:(CCTouchEvent *)event {
+    // get x,y coord
+    CGPoint touchLocation = [touch locationInNode:self];
+    
+    //trova la creatura in quella locazione
+    Creature *creature = [self creatureForTouchPosition:touchLocation];
+    
+    //inverti lo stato della creatura
+    creature.isAlive = !creature.isAlive;
+}
+
+- (Creature *)creatureForTouchPosition:(CGPoint)touchPosition{
+    //get the row and column that was touched, return the Creature inside the corresponding cell
+    int row = touchPosition.y / _cellHeight;
+    int column = touchPosition.x / _cellWidth;
+    
+    return _gridArray[row][column];
+}
+
 @end
+
+
+
+
+
+
+
+
+
